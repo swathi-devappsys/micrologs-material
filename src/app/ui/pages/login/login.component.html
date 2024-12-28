@@ -1,0 +1,37 @@
+<mat-toolbar color="primary">
+  <span>DevAppSys</span>
+  <span class="spacer"></span>
+
+</mat-toolbar>
+
+<div class="content">
+  <mat-card class="login-card">
+    <h2>Login</h2>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" />
+        @if(loginForm.get('email')?.hasError('required')){
+          <mat-error >Email is required</mat-error>
+        }
+       @if(loginForm.get('email')?.hasError('email'))
+       {<mat-error>Enter a valid email</mat-error>}
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input matInput formControlName="password" type="password" />
+        @if(loginForm.get('password')?.hasError('required')){
+
+          <mat-error >Password is required</mat-error>
+        }
+
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width" type="submit" [disabled]="!loginForm.valid">
+        Login
+      </button>
+    </form>
+  </mat-card>
+</div>

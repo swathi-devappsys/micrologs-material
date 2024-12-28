@@ -1,0 +1,70 @@
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-semibold" [class.text-white]="theme === 'primary'" [class.text-gray-800]="theme === 'white'">Raw Logs</h2>
+    <div class="flex gap-4">
+      <button mat-raised-button [color]="theme === 'primary' ? 'accent' : 'primary'" (click)="exportToCSV()">
+        <mat-icon>download</mat-icon>
+        Export to CSV
+      </button>
+      <button mat-raised-button [color]="theme === 'primary' ? 'warn' : 'accent'" (click)="clearFilters()">
+        <mat-icon>clear</mat-icon>
+        Clear Filters
+      </button>
+    </div>
+  </div>
+
+  <mat-card ngClass="getCardClasses()">
+    <div class="overflow-x-auto">
+      <table mat-table [dataSource]="dataSource" matSort ngClass="getTableClasses()">
+        @for( column of displayedColumns;track $index){
+          <ng-container [matColumnDef]="column">
+            <!-- Header -->
+            <th mat-header-cell *matHeaderCellDef ngClass="getHeaderClasses()">
+              <div class="py-2">
+                <div class="font-medium mb-2">{{ column | titlecase }}</div>
+                <mat-form-field class="w-full" [appearance]="theme === 'primary' ? 'fill' : 'outline'">
+                  <input matInput [placeholder]="'Filter ' + column"
+                         [(ngModel)]="columnFilters[column]"
+                         (keyup)="applyFilters()"
+                         class="text-sm">
+                  @if(columnFilters[column]){
+                  <button matSuffix mat-icon-button
+                          (click)="clearFilter(column)">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  }
+                </mat-form-field>
+              </div>
+            </th>
+
+            <!-- Cell -->
+            <td mat-cell *matCellDef="let row"
+                ngClass="[getCellClass(column, row[column]), getCellThemeClass()]">
+              {{ formatCellValue(column, row[column]) }}
+            </td>
+          </ng-container>
+        }
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+            ngClass="getRowClasses()"></tr>
+
+        <!-- No Data Row -->
+        <tr class="mat-row" *matNoDataRow>
+          <td ngClass="getNoDataClasses()" [attr.colspan]="displayedColumns.length">
+            No data matches the filter criteria
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                   [pageSize]="10"
+                   showFirstLastButtons
+                   ngClass="getPaginatorClasses()"
+                   aria-label="Select page of logs">
+    </mat-paginator>
+  </mat-card>
+</div>
+
