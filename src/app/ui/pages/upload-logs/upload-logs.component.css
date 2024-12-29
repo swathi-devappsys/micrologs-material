@@ -1,0 +1,178 @@
+/* Header Title */
+.header-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  margin-bottom: 0; /* Remove bottom margin to prevent extra space */
+}
+
+.primary-text {
+  color: white;
+}
+
+.white-text {
+  color: #333;
+}
+
+/* Container */
+.container {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fafafa;
+  margin-left: 10px;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent content from wrapping */
+}
+
+/* Clear Filters Button */
+.clear-filters-btn {
+  font-size: 12px;
+  margin: 8px 0;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Table Card */
+.table-card {
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Table Container */
+.table-container {
+  overflow-x: auto; /* Horizontal scrolling for table */
+  max-height: 65vh;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-top: 10px; /* Add space between table and button */
+}
+
+/* Table Styling */
+.logs-table {
+  width: 100%;
+  min-width: 800px; /* Ensures a minimum width for horizontal scroll */
+  font-size: 12px;
+  border-collapse: collapse;
+  table-layout: auto;
+}
+
+/* Table Header Cell */
+.table-header-cell {
+  background-color: #f7f7f7;
+  font-weight: bold;
+  text-align: center;
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  white-space: nowrap; /* Prevent header text from wrapping */
+}
+
+/* Remove Gap Below Filter Inputs */
+.filter-input {
+  width: 100%;
+  margin: 0; /* Removes any margin */
+  padding: 2px 4px; /* Adds slight padding for better appearance */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  line-height: normal; /* Ensures consistent input height */
+}
+
+.input-field {
+  font-size: 12px;
+  margin: 0; /* Removes any default margin */
+  padding: 2px 4px; /* Adjusts padding for cleaner look */
+  display: block; /* Ensures consistent alignment */
+}
+
+.clear-icon-btn {
+  font-size: 12px;
+  margin: 0; /* Removes any margin */
+  padding: 0;
+}
+
+/* Table Cell */
+.table-cell {
+  text-align: center;
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Prevent cell content from wrapping */
+}
+
+/* Specific Column Widths */
+.logs-table th,
+.logs-table td {
+  width: 120px; /* Adjust column width for smaller columns */
+  max-width: 120px;
+}
+
+/* Header Row */
+.header-row {
+  background-color: #f5f5f5;
+}
+
+/* Data Row */
+.data-row:hover {
+  background-color: #f9f9f9;
+}
+
+/* JSON Button */
+.json-btn {
+  font-size: 14px;
+  color: #1976d2;
+}
+
+/* No Data Cell */
+.no-data-cell {
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+  padding: 12px;
+}
+
+/* Pagination */
+.pagination-container {
+  margin-top: 10px;
+  padding: 8px;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  text-align: right;
+}
+
+/* Mobile Adjustment */
+@media screen and (max-width: 768px) {
+  /* Make the table horizontally scrollable */
+  .table-container {
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
+    margin-bottom: 20px; /* Add margin to avoid overlapping content */
+  }
+
+  .logs-table {
+    min-width: 600px; /* Minimum width for the table */
+  }
+
+  /* Adjust table header cell for mobile */
+  .table-header-cell {
+    font-size: 10px;
+    padding: 4px;
+  }
+
+  /* Adjust table cell size for mobile */
+  .table-cell {
+    font-size: 10px;
+    padding: 4px;
+  }
+
+  .clear-filters-btn {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+}

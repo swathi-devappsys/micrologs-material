@@ -20,6 +20,7 @@ import {MatInput, MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatIcon, MatIconModule} from '@angular/material/icon';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {ApiHelperService} from '../../../services/network/api-helper/api-helper.service';
 
 export interface LogData {
   clientID: string;
@@ -106,8 +107,18 @@ export class RawLogsComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dialog: MatDialog,
-    private datePipe: DatePipe
-  ) {}
+    private datePipe: DatePipe,
+    private apiHelper: ApiHelperService
+  ) {
+    this.apiHelper.getRawLogs().subscribe(
+      data => {
+        console.log(data.data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
 
   ngOnInit(): void {
     // Initialize filters
@@ -156,17 +167,7 @@ export class RawLogsComponent implements OnInit, AfterViewInit {
         surveyUUID: '',
         userId: '3838',
       },
-      {
-        clientID: 'STYRA_PRO_ALPHA',
-        deviceID: 'a256a29fb318f8d5',
-        durationNano: 100,
-        logTime: '2024-12-02 01:20:00.000',
-        logType: 1,
-        mnemonic: 'ALPHA',
-        status: 1,
-        surveyUUID: 'UUID_123',
-        userId: '1234',
-      },
+
     ];
 
     this.dataSource.data = exampleData;
@@ -291,16 +292,12 @@ export class RawLogsComponent implements OnInit, AfterViewInit {
         .map(col => this.formatCellValue(col, row[col as keyof LogData]))
     );
 
-    const csvContent = [
-      headers.join(','),
-      ...rows.map(row => row.join(','))
-    ].join('\n');
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
     const link = document.createElement('a');
-    const url = URL.createObjectURL(blob);
 
-    link.setAttribute('href', url);
+
+
     link.setAttribute('download', `raw_logs_${new Date().getTime()}.csv`);
     link.style.visibility = 'hidden';
 

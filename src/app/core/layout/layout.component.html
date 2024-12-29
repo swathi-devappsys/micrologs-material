@@ -4,17 +4,11 @@
   </button>
 
   <span class="app-title">DevappSys</span>
-
-  <!-- Always visible dashboard link on small screens -->
-<!--  <a mat-button routerLink="dashboard" class="mobile-dashboard-link">-->
-<!--    <mat-icon>dashboard</mat-icon>-->
-<!--    Dashboard-->
-<!--  </a>-->
 </mat-toolbar>
 
 <mat-sidenav-container class="main-container">
   <mat-sidenav #sidenav [mode]="sidenavMode" class="sidenav" [opened]="isLargeScreen">
-    <mat-nav-list>
+    <mat-nav-list class="sidenav-list">
       <a mat-list-item routerLink="dashboard" routerLinkActive="active-link">
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
@@ -27,7 +21,6 @@
         <mat-icon>upload</mat-icon>
         <span>Upload Logs</span>
       </a>
-
       <div class="spacer"></div>
 
       <button mat-list-item (click)="logout()" class="logout-btn">

@@ -1,1 +1,50 @@
-<p>home works!</p>
+<!-- Data Cards Section -->
+<div fxLayout="row" fxLayoutWrap fxLayoutGap="16px" class="data-cards">
+  <!-- Data Card 1 -->
+  <div fxFlex="33.33%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33.33%">
+    <mat-card class="card" style="padding: 16px; margin-bottom: 16px;">
+      <app-datacard></app-datacard>
+    </mat-card>
+  </div>
+
+  <!-- Data Card 2 -->
+  <div fxFlex="33.33%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33.33%">
+    <mat-card class="card" style="padding: 16px; margin-bottom: 16px;">
+      <app-datacard></app-datacard>
+    </mat-card>
+  </div>
+
+  <!-- Data Card 3 -->
+  <div fxFlex="33.33%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="33.33%">
+    <mat-card class="card" style="padding: 16px; margin-bottom: 16px;">
+      <app-datacard></app-datacard>
+    </mat-card>
+  </div>
+</div>
+
+<!-- Chart Section -->
+<div fxLayout="row" fxLayoutWrap fxLayoutGap="16px" class="chart-cards">
+  <!-- Pie Chart Box -->
+  <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="50%">
+    <mat-card class="card" style="padding: 16px; margin-bottom: 16px;">
+      <mat-card-header>
+        <mat-card-title>Pie Chart</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-piechart></app-piechart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Bar Chart Box -->
+  <div fxFlex="50%" fxFlex.xs="100%" fxFlex.sm="50%" fxFlex.md="50%">
+    <mat-card class="card" style="padding: 16px; margin-bottom: 16px;">
+      <mat-card-header>
+        <mat-card-title>Bar Chart</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-barchart></app-barchart>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

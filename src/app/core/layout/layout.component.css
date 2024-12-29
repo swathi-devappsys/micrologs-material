@@ -1,15 +1,5 @@
-:host {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
+/* Navbar Styling */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 2;
   display: flex;
   align-items: center;
 }
@@ -17,63 +7,40 @@
 .app-title {
   margin-left: 16px;
   font-size: 20px;
+  font-weight: 500;
 }
 
-.mobile-dashboard-link {
-  margin-left: auto;
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .mobile-dashboard-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-}
-
+/* Main Container Styling */
 .main-container {
-  flex: 1;
-  margin-top: 64px; /* Height of toolbar */
+  height: 100vh;
 }
 
+/* Sidenav Styling */
 .sidenav {
   width: 250px;
-  border-right: 1px solid rgba(0, 0, 0, 0.12);
 }
 
-.content {
-  padding: 20px;
-  height: 100%;
-  overflow: auto;
-}
-
-mat-nav-list {
-  height: 100%;
+.sidenav-list {
   display: flex;
   flex-direction: column;
-}
-
-mat-nav-list a {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  height: 48px;
-}
-
-.active-link {
-  background: rgba(0, 0, 0, 0.04);
+  height: 100%;
 }
 
 .spacer {
-  flex: 1;
+  flex: 1 1 auto;
 }
 
+/* Logout Button Styling */
 .logout-btn {
-  margin-top: auto;
-  color: #f44336;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-mat-icon {
-  margin-right: 8px;
+.logout-btn mat-icon {
+  font-size: 20px;
 }

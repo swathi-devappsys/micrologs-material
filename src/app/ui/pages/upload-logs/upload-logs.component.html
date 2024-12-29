@@ -1,1 +1,77 @@
-<p>upload-logs works!</p>
+<h2 class="header-title" [class.primary-text]="theme === 'primary'" [class.white-text]="theme === 'white'">
+  Raw Logs
+</h2>
+
+<div class="container">
+  <!-- Clear Filters Section -->
+  <button mat-raised-button [color]="theme === 'primary' ? 'warn' : 'accent'" (click)="clearFilters()" class="clear-filters-btn">
+    <mat-icon>clear</mat-icon>
+    Clear Filters
+  </button>
+
+  <!-- Table Section -->
+  <mat-card class="table-card">
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource" matSort class="logs-table">
+
+        <!-- Dynamic Columns -->
+        @for(column of displayedColumns;track $index){
+          <ng-container  [matColumnDef]="column">
+            <!-- Header Cell -->
+            <th mat-header-cell *matHeaderCellDef class="table-header-cell">
+              <mat-form-field class="filter-input" [appearance]="theme === 'primary' ? 'fill' : 'outline'">
+                <input matInput [placeholder]="column | titlecase"
+                       [(ngModel)]="columnFilters[column]"
+                       (keyup)="applyFilters()"
+                       [matAutocomplete]="auto"
+                       class="input-field">
+                <mat-autocomplete #auto="matAutocomplete">
+                  @for(option of filterOptions[column];track $index){
+                    <mat-option [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  }
+
+                </mat-autocomplete>
+                @if(columnFilters[column]){
+                  <button  matSuffix mat-icon-button (click)="clearFilter(column)" class="clear-icon-btn">
+                    <mat-icon>close</mat-icon>
+                  </button>}
+
+              </mat-form-field>
+            </th>
+
+            <!-- Data Cell -->
+            <td mat-cell *matCellDef="let row" class="table-cell">
+              @if(column === 'jsonData'){
+              <button  mat-icon-button (click)="openJsonDialog(row[column])" class="json-btn">
+                <mat-icon>code</mat-icon>
+              </button>
+                }
+              @if(column !== 'jsonData'){
+              <span >{{ formatCellValue(column, row[column]) }}</span>
+              }
+            </td>
+          </ng-container>
+        }
+
+
+        <!-- Header Row -->
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-row"></tr>
+        <!-- Data Rows -->
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="data-row"></tr>
+        <!-- No Data Row -->
+        <tr *matNoDataRow>
+          <td [attr.colspan]="displayedColumns.length" class="no-data-cell">
+            No data matches the filter criteria
+          </td>
+        </tr>
+      </table>
+    </div>
+  </mat-card>
+
+  <!-- Pagination -->
+  <div class="pagination-container">
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25]" aria-label="Select page"></mat-paginator>
+  </div>
+</div>
