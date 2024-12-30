@@ -176,3 +176,58 @@
     padding: 4px 8px;
   }
 }
+
+
+.table-header-cell {
+  position: relative;
+  overflow: hidden;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+
+.resize-handle {
+  position: absolute;
+  top: 0;
+  right: -5px; /* Adjust to overlap the column border */
+  height: 100%; /* Ensure it spans the full height of the cell */
+  width: 10px; /* Make it wider for better interaction */
+  cursor: col-resize; /* Show a column resize cursor */
+  background: transparent; /* Transparent by default */
+
+  /* Add hover effect for better visibility */
+  &:hover {
+    background: rgba(0, 0, 0, 0.1); /* Light overlay */
+  }
+}
+.header-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.table-header-cell {
+  position: relative;
+  overflow: visible; /* Ensure the handle isn't clipped */
+}
+
+.resize-handle {
+  position: absolute;
+  right: -5px; /* Offset to overlap column border */
+  top: 0;
+  height: 100%; /* Full height of the header */
+  width: 10px; /* Wider area for easier interaction */
+  cursor: col-resize;
+  z-index: 1; /* Ensure it stays on top */
+  background: transparent;
+}
+
+.resize-handle:hover {
+  background: rgba(0, 0, 0, 0.1); /* Highlight on hover */
+}

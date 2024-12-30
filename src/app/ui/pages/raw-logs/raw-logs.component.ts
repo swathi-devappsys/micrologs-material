@@ -219,6 +219,7 @@ export class RawLogsComponent implements OnInit, AfterViewInit {
   applyFilters(): void {
     this.paginator.pageIndex = 0;
     this.dataSource.filter = JSON.stringify(this.columnFilters);
+    console.log(this.dataSource);
   }
 
   clearFilters(): void {

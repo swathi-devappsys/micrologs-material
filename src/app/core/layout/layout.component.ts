@@ -29,24 +29,27 @@ import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
 })
 export class LayoutComponent {
   dashboard = ROUTESCONSTANT.DASHBOARD;
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-  isLargeScreen = false;
-  sidenavMode: 'over' | 'side' = 'over';
+  options = [
+    {
+      routerLink: ROUTESCONSTANT.DASHBOARD,
+      name: 'Dashboard'
+    },
+    {
+      routerLink: ROUTESCONSTANT.RAW_LOGS,
+      name: 'Raw Logs'
+    },
+    {
+      routerLink: ROUTESCONSTANT.UPLOAD_LOGS,
+      name: 'Upload Logs'
+    }
+  ];
 
-  constructor(private breakpointObserver: BreakpointObserver) {
-    this.breakpointObserver
-      .observe([Breakpoints.Large, Breakpoints.XLarge])
-      .subscribe(result => {
-        this.isLargeScreen = result.matches;
-        this.sidenavMode = result.matches ? 'side' : 'over';
-      });
+  constructor() {
+
   }
 
   logout() {
     console.log('User logged out');
     // Implement logout logic here
   }
-
-  protected readonly ROUTES = ROUTESCONSTANT;
-  protected readonly ROUTESCONSTANT = ROUTESCONSTANT;
 }

@@ -1,46 +1,142 @@
-/* Navbar Styling */
+/* Navbar stays fixed at the top */
 .navbar {
-  display: flex;
-  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensures it overlaps other elements */
 }
 
-.app-title {
-  margin-left: 16px;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-/* Main Container Styling */
+/* Main container starts below the navbar */
 .main-container {
-  height: 100vh;
+  margin-top: 64px; /* Adjust based on the navbar height (default 64px for mat-toolbar) */
+  height: calc(100vh - 64px); /* Fill the remaining height */
 }
 
-/* Sidenav Styling */
-.sidenav {
-  width: 250px;
+/* Sidenav styling */
+mat-sidenav {
+  height: 100%;
 }
 
+/* Sidenav list with flex layout */
 .sidenav-list {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
+/* Spacer pushes logout button to the bottom */
 .spacer {
   flex: 1 1 auto;
 }
 
-/* Logout Button Styling */
-.logout-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
+/* Content area styling */
+.content {
+  padding: 16px;
+  box-sizing: border-box;
 }
 
-.logout-btn mat-icon {
-  font-size: 20px;
+
+/* Navbar stays fixed at the top with a subtle bottom border */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensures it overlaps other elements */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for distinction */
+  border-bottom: 1px solid #ddd; /* Light bottom border */
+  background-color: #fff; /* Ensure background is solid */
+}
+
+/* Main container starts below the navbar */
+.main-container {
+  margin-top: 64px; /* Adjust based on the navbar height (default 64px for mat-toolbar) */
+  height: calc(100vh - 64px); /* Fill the remaining height */
+}
+
+/* Sidenav styling with a right border */
+mat-sidenav {
+  height: 100%;
+  box-shadow: 2px 0px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for the right side */
+  border-right: 1px solid #ddd; /* Light right border */
+  border-radius: 0px;
+  background-color: #f9f9f9; /* Slightly lighter background for contrast */
+}
+
+/* Sidenav list with flex layout */
+.sidenav-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Spacer pushes logout button to the bottom */
+.spacer {
+  flex: 1 1 auto;
+}
+
+/* Content area styling */
+.content {
+  padding: 16px;
+  box-sizing: border-box;
+}
+/* Styling for navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+}
+
+/* Main container for sidenav */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  /*min-height: 100vh;*/
+  background-color: #f5f5f5;
+}
+
+/* Sidenav list */
+.sidenav-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-between;
+  padding-bottom: 16px;
+}
+
+/* Footer styling */
+.footer-card {
+  background-color: #1976d2; /* Color for footer */
+  color: white;
+  text-align: center;
+  padding: 12px 0;
+  font-size: 14px;
+  margin-top: auto; /* Ensure footer is at the bottom */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-card span {
+  margin-top: 5px;
+}
+
+/* Optional: Spacer to ensure footer is at the bottom of the page */
+.spacer {
+  flex-grow: 1;
+}
+
+@media (max-width: 600px) {
+  .footer-card {
+    font-size: 12px;
+  }
 }

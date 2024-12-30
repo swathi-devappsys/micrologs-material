@@ -6,6 +6,7 @@ import {DatacardComponent} from '../../../utils/components/datacard/datacard.com
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {FlexModule} from '@angular/flex-layout';
 
+
 @Component({
   selector: 'app-home',
   imports: [
@@ -16,8 +17,6 @@ import {FlexModule} from '@angular/flex-layout';
     MatCardHeader,
     MatCardContent,
     MatCardTitle,
-    MatGridList,
-    MatGridTile,
     FlexModule,
 
   ],

@@ -17,7 +17,7 @@ import {
   MatDialogContent,
   MatDialogTitle
 } from '@angular/material/dialog';
-import { TitleCasePipe } from '@angular/common';
+import {DatePipe, TitleCasePipe} from '@angular/common';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { MatCard } from '@angular/material/card';
 import { MatFormField } from '@angular/material/form-field';
@@ -25,6 +25,8 @@ import { MatInput } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatAutocomplete, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { MatIcon } from '@angular/material/icon';
+import {FlexModule} from '@angular/flex-layout';
+import {ResizableModule} from 'angular-resizable-element';
 
 export interface LogData {
   clientID: string;
@@ -66,9 +68,11 @@ export interface LogData {
     MatRow,
     MatRowDef,
     MatNoDataRow,
-    MatPaginator
+    MatPaginator,
+    FlexModule,ResizableModule
   ],
-  styleUrls: ['./upload-logs.component.css']
+  styleUrls: ['./upload-logs.component.css'],
+  providers: [DatePipe]
 })
 export class UploadLogsComponent implements OnInit {
   @Input() theme: 'white' | 'primary' = 'white';
@@ -84,64 +88,110 @@ export class UploadLogsComponent implements OnInit {
     'surveyUUID',
     'userId',
     'jsonData',
-    'swathi',
-    'adarsh'
   ];
 
-  dataSource = new MatTableDataSource<LogData>([
-    {
-      clientID: 'C123',
-      deviceID: 'D456',
-      durationNano: 123456789,
-      logTime: '2024-12-29T10:00:00Z',
-      logType: 1,
-      mnemonic: 'LOG1',
-      status: 200,
-      surveyUUID: 'abc123',
-      userId: 'user01',
-      jsonData: '{"key1":"value1","key2":"value2"}'
-    },
-    {
-      clientID: 'C124',
-      deviceID: 'D457',
-      durationNano: 987654321,
-      logTime: '2024-12-29T11:00:00Z',
-      logType: 2,
-      mnemonic: 'LOG2',
-      status: 500,
-      surveyUUID: 'abc124',
-      userId: 'user02',
-      jsonData: '{"key3":"value3","key4":"value4"}'
-    },
-    {
-      clientID: 'C125',
-      deviceID: 'D458',
-      durationNano: 654987321,
-      logTime: '2024-12-29T12:00:00Z',
-      logType: 3,
-      mnemonic: 'LOG3',
-      status: 404,
-      surveyUUID: 'abc125',
-      userId: 'user03',
-      jsonData: '{"key5":"value5","key6":"value6"}'
-    }
-  ]);
+  dataSource = new MatTableDataSource<LogData>();
+
+  pageSize = 10;
+  currentPage = 0;
 
   columnFilters: { [key: string]: string } = {};
   filterOptions: { [key: string]: string[] } = {};
-  searchQuery: string = '';  // Global search field
+  columnWidths: { [key: string]: number } = {};
+   loadData(){
+     this.dataSource.data=[
+       {
+         clientID: 'C123',
+         deviceID: 'D456',
+         durationNano: 123456789,
+         logTime: '2024-12-29T10:00:00Z',
+         logType: 1,
+         mnemonic: 'LOG1',
+         status: 200,
+         surveyUUID: 'abc123',
+         userId: 'user01',
+         jsonData: '{"key1":"value1","key2":"value2"}'
+       },
+       {
+         clientID: 'C124',
+         deviceID: 'D457',
+         durationNano: 987654321,
+         logTime: '2024-12-29T11:00:00Z',
+         logType: 2,
+         mnemonic: 'LOG2',
+         status: 500,
+         surveyUUID: 'abc124',
+         userId: 'user02',
+         jsonData: '{"key3":"value3","key4":"value4"}'
+       },
+       {
+         clientID: 'C125',
+         deviceID: 'D458',
+         durationNano: 654987321,
+         logTime: '2024-12-29T12:00:00Z',
+         logType: 3,
+         mnemonic: 'LOG3',
+         status: 404,
+         surveyUUID: 'abc125',
+         userId: 'user03',
+         jsonData: '{"key5":"value5","key6":"value6"}'
+       }
+     ];
+
+   }
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog,private datePipe:DatePipe) {}
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    this.displayedColumns.forEach(column => {
+      this.columnFilters[column] = '';
+      this.columnWidths[column] = 200;
+    })
 
-    // Dynamically populate filterOptions based on data in the table
+    this.loadData();
+
     this.updateFilterOptions();
+
+    this.setupFilterPredicate();
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.sort.sortChange.subscribe(() => {
+      this.paginator.pageIndex = 0;
+      this.currentPage = this.paginator.pageIndex;
+      this.pageSize = this.paginator.pageSize;
+      this.loadData();
+    })
+
+    this.paginator.page.subscribe(() => {
+      this.currentPage = this.paginator.pageIndex;
+      this.pageSize = this.paginator.pageSize;
+      this.loadData();
+    })
+
+
+  }
+  private setupFilterPredicate(): void {
+    this.dataSource.filterPredicate = (data: LogData, filter: string) => {
+      const filters = JSON.parse(filter);
+      return Object.keys(filters).every(key => {
+        const value = filters[key].toLowerCase();
+        if (!value) return true;
+
+        const dataValue = data[key as keyof LogData];
+        if (dataValue === null || dataValue === undefined) return false;
+
+        return dataValue.toString().toLowerCase().includes(value);
+      });
+    };
   }
 
   updateFilterOptions(): void {
@@ -157,20 +207,22 @@ export class UploadLogsComponent implements OnInit {
   }
 
   applyFilters(): void {
-    this.dataSource.filter = JSON.stringify({ ...this.columnFilters, globalSearch: this.searchQuery });
+    this.paginator.pageIndex = 0;
+
+    this.dataSource.filter = JSON.stringify(this.columnFilters );
+    console.log(this.dataSource);
+
+
   }
 
   clearFilters(): void {
-    Object.keys(this.columnFilters).forEach(key => {
-      this.columnFilters[key] = '';
-    });
-    this.searchQuery = '';  // Clear the global search
+   this.columnFilters={}
     this.applyFilters();
   }
 
   clearFilter(column: string): void {
     this.columnFilters[column] = '';
-    this.applyFilters();
+    this.applyFilters()
   }
 
   formatCellValue(column: string, value: any): string {
@@ -185,6 +237,12 @@ export class UploadLogsComponent implements OnInit {
 
   applyGlobalSearch(): void {
     this.applyFilters();
+  }
+
+  onResize($event: UIEvent, column: string) {
+    const width = ($event.target as HTMLDivElement).offsetWidth;
+    this.columnWidths[column] = width;
+    console.log(this.columnWidths);
   }
 }
 

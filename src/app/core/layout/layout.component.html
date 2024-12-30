@@ -1,35 +1,29 @@
 <mat-toolbar color="primary" class="navbar">
-  <button mat-icon-button (click)="sidenav.toggle()" class="menu-button" aria-label="Toggle Sidenav">
+  <!-- Toggle Button -->
+  <button mat-icon-button (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-
-  <span class="app-title">DevappSys</span>
+  <span>Micrologs</span>
 </mat-toolbar>
 
 <mat-sidenav-container class="main-container">
-  <mat-sidenav #sidenav [mode]="sidenavMode" class="sidenav" [opened]="isLargeScreen">
+  <!-- Sidenav -->
+  <mat-sidenav #sidenav mode="over">
     <mat-nav-list class="sidenav-list">
-      <a mat-list-item routerLink="dashboard" routerLinkActive="active-link">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </a>
-      <a mat-list-item [routerLink]="ROUTES.RAW_LOGS" routerLinkActive="active-link">
-        <mat-icon>description</mat-icon>
-        <span>RAW LOGS</span>
-      </a>
-      <a mat-list-item [routerLink]="ROUTES.UPLOAD_LOGS" routerLinkActive="active-link">
-        <mat-icon>upload</mat-icon>
-        <span>Upload Logs</span>
-      </a>
+      @for (item of options; track item.name){
+        <a mat-list-item [routerLink]="item.routerLink" (click)="sidenav.toggle()">{{item.name}}</a>
+      }
+
       <div class="spacer"></div>
 
-      <button mat-list-item (click)="logout()" class="logout-btn">
-        <mat-icon>logout</mat-icon>
-        <span>Logout</span>
+      <button mat-list-item (click)="logout()" style="display: flex; align-items: center; gap: 8px; padding: 0; border-radius: 0px">
+        <span style="line-height: 1; font-size: 16px;">Logout</span>
+        <mat-icon style="line-height: 1; font-size: 20px; vertical-align: middle;">logout</mat-icon>
       </button>
     </mat-nav-list>
   </mat-sidenav>
 
+  <!-- Main Content -->
   <mat-sidenav-content>
     <div class="content">
       <router-outlet></router-outlet>
